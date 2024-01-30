@@ -64,6 +64,7 @@ void dfs(int s) {
 
 void build_rmq() {
 	int NN = 2 * (int(graph.size()) - 1) + 1;
+	rmq_table.clear();
 	rmq_table.resize(NN + 1, vector<int> (log2(NN) + 1, -1));
 
 	for (int i = 1; i <= NN; ++i)
