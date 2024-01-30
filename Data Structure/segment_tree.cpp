@@ -170,8 +170,11 @@ int32_t main() {
 	for (auto &i : arr)
 		cin >> i;
 
+	// 1-index based
 	segment_tree<node> seg(n);       // empty segment tree of n size
 	segment_tree<node> seg_arr(arr); // segment tree using arr
+
+	seg.update(1, 5)                          // update index 1 to 5
 
 	cout << seg.query_sum(1, n) << endl;      // range_sum
 	cout << seg_arr.query_min(1, n) << endl;  // range_min
