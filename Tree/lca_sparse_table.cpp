@@ -3,7 +3,7 @@ using namespace std;
 
 vector<vector<int>> graph;
 vector<int> depth, subtree_size;
-vector<int> heavy_root, parent;
+vector<int> parent;
 vector<int> first_seen, last_seen;
 vector<int> euler, tour_list;
 vector<vector<int>> rmq_table;
@@ -17,14 +17,12 @@ void init(int N) {
 	tour_list.clear();
 	first_seen.clear();
 	last_seen.clear();
-	heavy_root.clear();
 	parent.clear();
 
 	tour = 1;
 	graph.resize(N + 1);
 	depth.resize(N + 1, 0);
 	subtree_size.resize(N + 1, 0);
-	heavy_root.resize(N + 1, 0);
 	parent.resize(N + 1, 0);
 
 	euler.emplace_back(0);
@@ -51,18 +49,15 @@ void dfs_subtree(int s, int par) {
 	});
 }
 
-void dfs(int s, bool heavy) {
-	heavy_root[s] = heavy ? heavy_root[parent[s]] : s;
+void dfs(int s) {
 	first_seen[s] = int(euler.size());
 	euler.emplace_back(s);
 	tour_list[tour] = s;
 	tour++;
-	bool is_heavy = true;
 
 	for (auto u : graph[s]) {
-		dfs(u, is_heavy);
+		dfs(u);
 		euler.emplace_back(s);
-		is_heavy = false;
 	}
 	last_seen[s] = int(euler.size());
 }
@@ -148,8 +143,9 @@ int32_t main() {
 		graph[v].push_back(u);
 	}
 
+	// Root is 1
 	dfs_subtree(1, 0);
-	dfs(1, false);
+	dfs(1);
 	build_rmq();
 
 	auto [d1, d2] = get_diameter(n);
