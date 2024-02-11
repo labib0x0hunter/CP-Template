@@ -86,6 +86,7 @@ int32_t main() {
 	// point update range query
 	// 1-index based
 	binary_index_tree<long long> bit(arr);
+	// binary_index_tree<long long> bit(n);
 
 	// point update
 	bit.update(4, 100); 		  // add 100 to arr[4]
@@ -100,6 +101,8 @@ int32_t main() {
 
 	// range update range query
 	RURQ<long long> bit2(arr);
+	// RURQ<long long> bit2(n);
+	
 	// range update
 	bit2.range_update(1, 4, 100);    // add 100 to arr[1], arr[2], arr[3], arr[4]
 	// point query
