@@ -100,6 +100,7 @@ int32_t main() {
 
 
 	// range update range query
+	// 1-index based
 	RURQ<long long> bit2(arr);
 	// RURQ<long long> bit2(n);
 	
@@ -108,6 +109,7 @@ int32_t main() {
 	// point query
 	cout << bit2.query(4) << endl;   // get arr[1] + arr[2] + arr[3] + arr[4]
 	// range query
+	// query(r) - query(l - 1)
 	cout << bit2.query(4) - bit2.query(2) << endl; // get arr[3] + arr[4]
 
 	return 0;
