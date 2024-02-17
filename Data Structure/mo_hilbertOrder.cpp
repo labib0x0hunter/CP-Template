@@ -52,7 +52,6 @@ int32_t main() {
 			queries[i].get_order();
 		}
 
-		int block_size = 400;
 		sort(queries.begin(), queries.end(), [&](const Query & a, const Query & b) {
 			return a.idx < b.idx;
 		});
