@@ -3,10 +3,11 @@ using namespace std;
 
 vector<vector<int>> graph;
 vector<int> depth, subtree_size;
-vector<int> parent;
+vector<int> heavy_root, parent;
 vector<int> first_seen, last_seen;
 vector<int> euler, tour_list;
 vector<vector<int>> rmq_table;
+vector<int> tour_start;
 int tour;
 
 void init(int N) {
@@ -17,18 +18,22 @@ void init(int N) {
 	tour_list.clear();
 	first_seen.clear();
 	last_seen.clear();
+	heavy_root.clear();
 	parent.clear();
+	tour_start.clear();
 
 	tour = 1;
 	graph.resize(N + 1);
 	depth.resize(N + 1, 0);
 	subtree_size.resize(N + 1, 0);
+	heavy_root.resize(N + 1, 0);
 	parent.resize(N + 1, 0);
 
 	euler.emplace_back(0);
 	tour_list.resize(N + 1, 0);
 	first_seen.resize(N + 1, 0);
 	last_seen.resize(N + 1);
+	tour_start.resize(N + 1);
 }
 
 void dfs_subtree(int s, int par) {
@@ -49,22 +54,25 @@ void dfs_subtree(int s, int par) {
 	});
 }
 
-void dfs(int s) {
+void dfs(int s, bool heavy) {
+	heavy_root[s] = heavy ? heavy_root[parent[s]] : s;
 	first_seen[s] = int(euler.size());
 	euler.emplace_back(s);
 	tour_list[tour] = s;
+	tour_start[s] = tour;
 	tour++;
+	bool is_heavy = true;
 
 	for (auto u : graph[s]) {
-		dfs(u);
+		dfs(u, is_heavy);
 		euler.emplace_back(s);
+		is_heavy = false;
 	}
 	last_seen[s] = int(euler.size());
 }
 
 void build_rmq() {
 	int NN = 2 * (int(graph.size()) - 1) + 1;
-	rmq_table.clear();
 	rmq_table.resize(NN + 1, vector<int> (log2(NN) + 1, -1));
 
 	for (int i = 1; i <= NN; ++i)
@@ -127,31 +135,55 @@ pair<int, int> get_diameter(int N) {
 	return make_pair(diam[0], diam[1]);
 }
 
+// k is 0 index-based
+// output 0 means ROOT of root
+int kth_ancestor(int u, int k) {
+	assert(k <= depth[u]);
+	int up = depth[u] - k;
+	while (depth[heavy_root[u]] > up)
+		u = parent[heavy_root[u]];
+	return tour_list[tour_start[u] + up - depth[u] - 1];
+}
+
+int get_kth_node_on_path(int a, int b, int k) {
+	int anc = get_lca(a, b);
+	int first_half = depth[a] - depth[anc];
+	int second_half = depth[b] - depth[anc];
+	if (k < 0 || k > first_half + second_half)
+		return -1;
+	if (k < first_half)
+		return kth_ancestor(a, k);
+	else
+		return kth_ancestor(b, first_half + second_half - k);
+}
+
 int32_t main() {
 
 	ios::sync_with_stdio(false) ; cin.tie(0) ;
 
-	int n;
-	cin >> n;
+	int t_c = 1, tt_c = 1;
+	cin >> t_c;
 
-	init(n);
+	while (t_c--) {
 
-	for (int i = 0; i < n - 1; i++) {
-		int u, v;
-		cin >> u >> v;
+		int n;
+		cin >> n;
 
-		graph[u].push_back(v);
-		graph[v].push_back(u);
+		init(n);
+
+		for (int i = 0; i < n - 1; i++) {
+			int u, v;
+			cin >> u >> v;
+
+			graph[u].push_back(v);
+			graph[v].push_back(u);
+		}
+
+		dfs_subtree(1, 0);
+		dfs(1, false);
+		build_rmq();
+
 	}
-
-	// Root is 1
-	dfs_subtree(1, 0);
-	dfs(1);
-	build_rmq();
-
-	auto [d1, d2] = get_diameter(n);
-	int lca = get_lca(d1, d2);
-	int dist_ = dist(d1, d2);
 
 	return 0;
 }
