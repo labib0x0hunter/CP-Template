@@ -138,13 +138,16 @@ pair<int, int> get_diameter(int N) {
 // k is 0 index-based
 // output 0 means ROOT of root
 int kth_ancestor(int u, int k) {
-	assert(k <= depth[u]);
-	int up = depth[u] - k;
-	while (depth[heavy_root[u]] > up)
-		u = parent[heavy_root[u]];
-	return tour_list[tour_start[u] + up - depth[u] - 1];
+	if (k > depth[u]) return -1;	
+	while (u >= 1) {
+		int root = heavy_root[u];
+		if (depth[root] <= depth[u] - k)
+			return tour_list[tour_start[u] - k - 1];
+		k -= depth[u] - depth[root] + 1;
+		u = parent[root];
+	}
+	return u;
 }
-
 int get_kth_node_on_path(int a, int b, int k) {
 	int anc = get_lca(a, b);
 	int first_half = depth[a] - depth[anc];
