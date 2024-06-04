@@ -1,0 +1,1 @@
+cout << (con ? "Yes" : "No") << endl;
