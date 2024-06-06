@@ -87,8 +87,8 @@ void hash_power_mul(HASH &a, int p) {
 // hash = hash1 + hash2
 // sizee is the len of string a
 HASH hash_concat(HASH a, HASH b, int sizee) {
-	hash_power_mul(b, sizee);
-	return add(a, b);
+	HASH scaled_b = mult(b, power[size_a]);
+	return add(a, scaled_b);
 }
 
 // a + bd + c = ac
