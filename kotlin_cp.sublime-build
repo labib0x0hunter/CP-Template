@@ -1,0 +1,7 @@
+{
+  "cmd": ["(kotlinc ${file} -include-runtime -d ${file_path}/output.jar) && (timeout -k 5 10s kotlin ${file_path}/output.jar </home/labib/Desktop/Code/input.txt | tee /home/labib/Desktop/Code/output.txt)"],
+  "selector": "source.kotlin",
+  "shell": true,
+  "working_dir": "$file_path",
+  "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$"
+}
