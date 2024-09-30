@@ -10,16 +10,17 @@ struct segment_tree_lazy {
 	int N;
 	vector<T> t;
 	vector<TT> lazy;
+	TT LazyValue = 0;  // Change LazyValue
 
 	segment_tree_lazy() {}
 	segment_tree_lazy(int N) : N(N) {
 		t.resize(4 * (N + 1), T{0});   // Set Value
-		lazy.resize(4 * (N + 1), 0);
+		lazy.resize(4 * (N + 1), LazyValue);
 	}
 	segment_tree_lazy(vector<int> & arr) {       // ARRAY TYPE
 		N = int(arr.size());
 		t.resize(4 * (N + 1), T{0});  // Set value
-		lazy.resize(4 * (N + 1), 0);
+		lazy.resize(4 * (N + 1), LazyValue);
 		build(1, 1, N, arr);
 	}
 
@@ -39,7 +40,9 @@ struct segment_tree_lazy {
 	// t[n].summ = lazy[n] * (e - b + 1)
 	// lazy[n * 2] = lazy[n]
 	void push(int n, int b, int e) {
-		if (lazy[n] == 0) return;
+		// Especially When replacing values
+		// also change from Constructor
+		if (lazy[n] == LazyValue) return;  // CareFul Here Updaing with LazyValue can leads to bugs
 		t[n].val = t[n].val + (TT) lazy[n] * (e - b + 1);
 		// t[n].minn = t[n].minn + lazy[n];
 		// t[n].maxx = t[n].maxx + lazy[n];
@@ -47,7 +50,7 @@ struct segment_tree_lazy {
 			lazy[n * 2] = lazy[n * 2] + lazy[n];
 			lazy[n * 2 + 1] = lazy[n * 2 + 1] + lazy[n];
 		}
-		lazy[n] = 0;
+		lazy[n] = LazyValue;
 	}
 
 	void build(int n, int b, int e, vector<int>&a) {    // ARRAY TYPE
