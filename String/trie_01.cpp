@@ -93,7 +93,7 @@ void dfs(int cur) {
 	for (int i = 0; i < 26; i++) {
 		if (tr.TRIE[cur].child[i] == -1)
 			continue;
-		dfs(tr.TRIE[cur].child[i], qp);
+		dfs(tr.TRIE[cur].child[i]);
 	}
 };
 
