@@ -121,6 +121,10 @@ mint nCr(int n, int r) {
 	return fact[n] * inv_fact[r] * inv_fact[n - r];
 }
 
+mint StartAndBars(int n, int k) {
+	return nCr(n + k - 1, k - 1);
+}
+
 void derangement(int n) {
 	demnt.resize(n + 1);
 	demnt[0] = mint(1);
