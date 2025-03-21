@@ -95,7 +95,7 @@ mint expo(intll x, intll y) {
 mint mod_inverse(int x) { return mint(1) / mint(x); }
 mint mod_inverse(mint x) { return mint(1) / mint(x); }
 
-vector<mint> fact, cat, inv_fact;
+vector<mint> fact, cat, inv_fact, demnt;
 void factorial(int n) {
 	fact.resize(n + 1);
 	fact[0] = fact[1] = mint(1);
@@ -119,4 +119,12 @@ mint nCr(int n, int r) {
 	assert(!inv_fact.empty());
 	if (n < r) return mint(0);
 	return fact[n] * inv_fact[r] * inv_fact[n - r];
+}
+
+void derangement(int n) {
+	demnt.resize(n + 1);
+	demnt[0] = mint(1);
+	demnt[1] = mint(0);
+	for (int i = 2; i <= n; i++)
+		demnt[i] = mint(i - 1) * (demnt[i - 1] + demnt[i - 2]);
 }
