@@ -16,7 +16,7 @@ auto bfs = [&](int i, int j) -> void {
 	que.push({i, j});
 	visited[i][j] = true;
 	while (!que.empty()) {
-		auto &[x, y] = que.front(); que.pop();
+		auto [x, y] = que.front(); que.pop();
 		for (int i = 0; i < 4; i++) {
 			int xx = x + dx[i];
 			int yy = y + dy[i];
