@@ -3,7 +3,7 @@
 
 **Notes**
 - In `go` `int` might pass multiplication without overflow because of the system. In 32bit architecture int works as 32bit and for 64bit architecture as 64bit.
-- In `c` or `c++`, you have `typecast` int to `long long` (eg. `1ll * a * b`) to avoid overflow of 32bit int.
+- In `c` or `c++`, you have to `typecast` int into `long long` (eg. `1ll * a * b`) to avoid overflow of 32bit int.
 - `setw(2)` will fix how many spaces are to be filled, here 2.
 - `setfill('0')` will fill the empty spaces fixed by `setw`
 - `setw()` and `setfill()` are included in `<iomanip>` header.
