@@ -1,2 +1,2 @@
 # CP-Template
-My personal template for competitive programming
+My personal **Notes and Templates** for competitive programming
