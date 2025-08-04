@@ -4,7 +4,7 @@
 - Include / Import headers for basic Input/Output(I/O) functions - `stdio.h` in c, `iostream` in c++, `fmt` in go.
 - For print use `printf()` in c, `cout` in c++, `fmt.Printf()` in go.
 - Every program starts from the `main function - main()`.
-- `"\n"` is used printing for new line. 
+- `"\n"` is used for printing new line. 
 
 **C Code**
 ```c
