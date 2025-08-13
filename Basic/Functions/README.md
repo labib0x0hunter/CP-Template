@@ -30,13 +30,14 @@ f(10)
 ---
 **Note**
 - For comparing if two doubles are equal, lets `EPS = 1e-9` then check `fabs(a - b) < EPS == true`.
+- `gcd()` is defined in `<numeric>`.
 ---
 **Problem-Lists**
 - [PB01](https://codeforces.com/group/MWSDmqGsZm/contest/219158/problem/H)
-- [PB02]()
-- [PB03]()
-- [PB04]()
-- [PB05]()
+- [PB02](https://codeforces.com/group/MWSDmqGsZm/contest/223205/problem/E)
+- [PB03](https://codeforces.com/group/MWSDmqGsZm/contest/219432/problem/L)
+- [PB04](https://codeforces.com/group/MWSDmqGsZm/contest/223205/problem/C)
+- [PB05](https://codeforces.com/group/MWSDmqGsZm/contest/219432/problem/J)
 - [PB06]()
 - [PB07]()
 - [PB08]()
